@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace PLANET2.ViewModels
@@ -28,7 +29,12 @@ namespace PLANET2.ViewModels
             timer.Tick += UpdateProcesses;
             timer.Start();
         }
-
+        public ICommand KillProcess { get { return new RelayCommand(KillProcessExecute, () => true); } }
+        private void KillProcessExecute()
+        {
+            Selected.Kill();
+            Selected = null;
+        }
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void UpdateProcesses(object sender, EventArgs e)
